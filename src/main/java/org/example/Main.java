@@ -48,7 +48,7 @@ public class Main {
             try (PreparedStatement ps = conn.prepareStatement("SELECT value " +
                     "FROM data_records " +
                     "ORDER BY insertDate " +
-                    "DESC LIMIT 10")) {
+                    "DESC LIMIT 13")) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     int v = rs.getInt("value");
