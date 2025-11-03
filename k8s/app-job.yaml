@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mariadb-demo-job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: mariadb-demo
+          image: booking-tickets-app:latest
+          imagePullPolicy: Never
+          env:
+            - name: DB_URL
+              value: jdbc:mariadb://mariadb:3306/testdb
+            - name: DB_USER
+              value: root
+            - name: DB_PASS
+              value: root

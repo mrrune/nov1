@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mariadb-demo-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+
+  # Optional: keep only the latest 3 job histories
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: mariadb-demo-cron-job-container
+              image: booking-tickets-app:latest
+              imagePullPolicy: Never
+              env:
+                - name: DB_URL
+                  value: jdbc:mariadb://mariadb:3306/testdb
+                - name: DB_USER
+                  value: root
+                - name: DB_PASS
+                  value: root
+

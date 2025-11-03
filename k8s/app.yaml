@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-demo
+spec:
+  selector:
+    matchLabels:
+      app: mariadb-demo
+  template:
+    metadata:
+      labels:
+        app: mariadb-demo
+    spec:
+      containers:
+        - name: mariadb-demo
+          image: booking-tickets-app:latest
+          imagePullPolicy: Never
+          env:
+            - name: DB_URL
+              value: jdbc:mariadb://mariadb:3306/testdb
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-credentials
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-credentials
+                  key: DB_PASS
